@@ -1,0 +1,14 @@
+{
+  "name": "be-sporestash",
+  "version": "1.0.0",
+  "description": "Sporestash Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jacob Layton",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
