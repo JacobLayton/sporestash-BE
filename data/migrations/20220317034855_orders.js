@@ -14,7 +14,7 @@ exports.up = function (knex) {
     tbl.date("payment_date").nullable();
     tbl.date("ship_date").nullable();
     tbl.boolean("fulfilled").nullable();
-    tbl.int("customer_id").notNull();
+    tbl.integer("customer_id").notNull();
     tbl.text("error_msg").nullable();
     tbl.boolean("canceled").nullable();
     tbl.boolean("deleted").nullable();
