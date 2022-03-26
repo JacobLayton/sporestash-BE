@@ -18,6 +18,12 @@ exports.seed = async function (knex) {
         "https://images.unsplash.com/photo-1570977042406-8fba157deca0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
       created_date: "2022-03-17",
       is_active: true,
+      swab_price: 22.0,
+      print_price: 22.0,
+      syringe_price: 23.0,
+      swab_available: true,
+      print_available: true,
+      syringe_available: true,
     },
     {
       item_id: 2,
@@ -35,6 +41,11 @@ exports.seed = async function (knex) {
         "https://images.unsplash.com/photo-1542417938-a39dba3afeb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80",
       created_date: "2022-03-10",
       is_active: true,
+      swab_price: 18.0,
+      syringe_price: 20.0,
+      swab_available: true,
+      print_available: false,
+      syringe_available: true,
     },
     {
       item_id: 3,
@@ -52,6 +63,10 @@ exports.seed = async function (knex) {
         "https://images.unsplash.com/photo-1570977042406-8fba157deca0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
       created_date: "2022-03-03",
       is_active: true,
+      swab_price: 24.0,
+      swab_available: true,
+      print_available: false,
+      syringe_available: false,
     },
     {
       item_id: 4,
@@ -69,6 +84,7 @@ exports.seed = async function (knex) {
         "https://images.unsplash.com/photo-1619646081160-033d1d793388?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
       created_date: "2022-02-27",
       is_active: true,
+      hide_type: true,
     },
     {
       item_id: 5,
@@ -86,6 +102,9 @@ exports.seed = async function (knex) {
         "https://images.unsplash.com/photo-1499971856191-1a420a42b498?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=762&q=80",
       created_date: "2022-02-22",
       is_active: true,
+      display_size: true,
+      sizes_available:
+        '{"xs":"false","s":"true","m":"true","l":"true","xl":"true","xxl":"false"}',
     },
   ]);
 };
