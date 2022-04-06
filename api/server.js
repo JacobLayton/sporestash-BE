@@ -1,6 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const itemRoutes = require("./routes/itemRoutes");
 const orderRoutes = require("./routes/orderRoutes");
@@ -21,6 +22,7 @@ server.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
+server.use(bodyParser.json());
 
 // Routes
 server.use("/items", itemRoutes);
