@@ -6,7 +6,7 @@ const db = require("../../data/dbConfig");
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 
-// const { checkJwt } = require('../check-jwt');
+const { checkJwt } = require("../check-jwt");
 
 // GET all items
 router.get("/", async (req, res) => {
@@ -56,7 +56,7 @@ router.get("/category/:cat", async (req, res) => {
 });
 
 // POST new item
-router.post("/", async (req, res) => {
+router.post("/", checkJwt, async (req, res) => {
   await db("items")
     .insert(req.body)
     .then((item) => {
@@ -74,7 +74,7 @@ router.post("/", async (req, res) => {
 });
 
 // PUT edit item
-router.put("/:id", async (req, res) => {
+router.put("/:id", checkJwt, async (req, res) => {
   const { id } = req.params;
   await db("items")
     .where({ item_id: id })
@@ -96,7 +96,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE item at id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkJwt, async (req, res) => {
   const { id } = req.params;
   await db("items")
     .where({ item_id: id })

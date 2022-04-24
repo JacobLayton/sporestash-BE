@@ -133,7 +133,7 @@ exports.seed = async function (knex) {
         "This is a blurb describing the strickers, a little bit of info to get the custy clicking.",
       item_description:
         "This is some details about the stickers I'm trying to make it long so tha tit fills up space. This is some details about the stickers I'm trying to make it long so tha tit fills up space. This is some details about the stickers I'm trying to make it long so tha tit fills up space. This is some details about the stickers I'm trying to make it long so tha tit fills up space. This is some details about the stickers I'm trying to make it long so tha tit fills up space. ",
-      item_category: "more",
+      item_category: "merch",
       item_quantity: 100,
       item_price: 5.0,
       units_available: 100,
@@ -151,7 +151,7 @@ exports.seed = async function (knex) {
         "This is a blurb describing the hoodies, a little bit of info to get the custy clicking.",
       item_description:
         "This is some details about the Hoodies I'm trying to make it long so tha tit fills up space. This is some details about the Hoodies I'm trying to make it long so tha tit fills up space. This is some details about the Hoodies I'm trying to make it long so tha tit fills up space. This is some details about the Hoodies I'm trying to make it long so tha tit fills up space. This is some details about the Hoodies I'm trying to make it long so tha tit fills up space. ",
-      item_category: "more",
+      item_category: "merch",
       item_quantity: 10,
       item_price: 45.0,
       units_available: 10,
