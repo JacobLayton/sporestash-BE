@@ -19,6 +19,17 @@ router.get("/", async (req, res) => {
     });
 });
 
+// GET all items server side
+router.get("/api", async (req, res) => {
+  await db("items")
+    .then((items) => {
+      res.status(200).json(items);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Could not get items." });
+    });
+});
+
 // GET item with id
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
