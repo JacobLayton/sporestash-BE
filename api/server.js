@@ -23,7 +23,8 @@ server.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
-server.use(bodyParser.json());
+server.use("/payment/webhook", express.raw({ type: "*/*" }));
+server.use(express.json());
 
 // Routes
 server.use("/items", itemRoutes);

@@ -45,6 +45,12 @@ function buildItemPricesObj(items) {
   return itemPricesObj;
 }
 
+function handlePaymentSuccess(paymentData) {
+  console.log("=====Payment Data: ", paymentData);
+  console.log("******OrderData: ", paymentData.charges.data[0]);
+  return;
+}
+
 router.post("/create-checkout-session", async (req, res) => {
   console.log("endpoint pinged");
   await db("items")
@@ -95,13 +101,22 @@ router.post(
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
     } catch (err) {
-      response.status(400).send(`Webhook Error: ${err.message}`);
+      res.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
-
+    console.log("eventType: ", event.type);
     switch (event.type) {
+      case "payment_intent.succeeded":
+        const paymentIntent = event.data.object;
+        console.log(
+          `PaymentIntent for ${paymentIntent.amount} was successful!`
+        );
+        // Then define and call a method to handle the successful payment intent.
+        // handlePaymentIntentSucceeded(paymentIntent);
+        handlePaymentSuccess(paymentIntent);
+        break;
       case "customer.created":
         const customer = event.data.object;
         // Then define and call a function to handle the event customer.created
@@ -115,14 +130,14 @@ router.post(
       case "order.payment_succeeded":
         const orderSucc = event.data.object;
         // Then define and call a function to handle the event order.payment_succeeded
-        console.log("orderSucc: ", orderSucc);
+        console.log("order succ: ", orderSucc);
         break;
       // ... handle other event types
       default:
         console.log(`Unhandled event type ${event.type}`);
     }
 
-    response.send();
+    res.send();
   }
 );
 
