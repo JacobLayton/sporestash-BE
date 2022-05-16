@@ -9,7 +9,7 @@ const db = require("../../data/dbConfig");
 // const { checkJwt } = require("../check-jwt");
 
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
-const webhookSecret = process.env.STRIPE_WEBHOOK_SERCET;
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 function getDate() {
   const today = new Date();
@@ -60,9 +60,8 @@ function buildItemPricesObj(items) {
 
 function buildMetadata(cart) {
   const metaData = {};
-  const itemsArray = [];
   for (let i = 0; i < cart.length; i++) {
-    itemsArray.push({
+    const itemObj = {
       id: cart[i].id,
       item_category: cart[i].item_category,
       item_name: cart[i].item_name,
@@ -70,10 +69,21 @@ function buildMetadata(cart) {
       item_price: cart[i].item_price,
       item_quantity: cart[i].cart_quantity,
       item_size: cart[i].order_size,
-    });
+    };
+    metaData[i] = JSON.stringify(itemObj);
   }
-  metaData.order_details = JSON.stringify(itemsArray);
   return metaData;
+}
+
+function stringifyMetadata(metadata) {
+  const metadataArr = [];
+  const metadataKeys = Object.keys(metadata);
+  for (let i = 0; i < metadataKeys.length; i++) {
+    const itemMetadata = JSON.parse(metadata[metadataKeys[i]]);
+    metadataArr.push(itemMetadata);
+  }
+  const metadataJson = JSON.stringify(metadataArr);
+  return metadataJson;
 }
 
 async function handleCustomerCreated(customer) {
@@ -97,7 +107,7 @@ async function handleCustomerCreated(customer) {
     .insert(customerObj)
     .then((customer) => {
       if (customer) {
-        console.log("Customer Created: ", customer);
+        console.log("Customer Created: ", customer.rowCount);
       } else {
         console.log("Could not create customer");
       }
@@ -111,7 +121,6 @@ async function handleCustomerCreated(customer) {
 
 async function handleInventoryUpdate(orderDetails) {
   const orderItems = JSON.parse(orderDetails);
-  console.log("orderItems: ", orderItems);
   for (let i = 0; i < orderItems.length; i++) {
     if (orderItems[i].item_category !== "merch") {
       const itemArr = orderItems[i].id.split("-");
@@ -147,7 +156,7 @@ async function handleInventoryUpdate(orderDetails) {
 }
 
 async function handlePaymentSuccess(paymentData) {
-  const orderDetails = paymentData.metadata.order_details;
+  const orderDetails = await stringifyMetadata(paymentData.metadata);
   const orderTotal = Number(paymentData.amount_received) / 100;
   const paymentSuccess = paymentData.status === "succeeded";
   const cancellation =
@@ -213,7 +222,7 @@ router.post("/create-checkout-session", async (req, res) => {
               quantity: Number(cartItem.cart_quantity),
             };
           }),
-          success_url: `${process.env.CLIENT_ORIGIN_URL}/payment-succeeded`,
+          success_url: `${process.env.CLIENT_ORIGIN_URL}/payment-success`,
           cancel_url: `${process.env.CLIENT_ORIGIN_URL}/shop`,
           payment_intent_data: {
             metadata: buildMetadata(cart),
