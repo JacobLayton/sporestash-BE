@@ -87,6 +87,7 @@ function stringifyMetadata(metadata) {
 }
 
 async function handleCustomerCreated(customer) {
+  console.log("customer: ", customer);
   const phoneNumber = customer.phone ? customer.phone : "N/A";
   const customerObj = {
     created_date: getDate(),
