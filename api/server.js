@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const itemRoutes = require("./routes/itemRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const customerRoutes = require("./routes/customerRoutes");
+const emailRoutes = require("./routes/emailRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
 const server = express();
@@ -30,6 +31,7 @@ server.use(express.json());
 server.use("/items", itemRoutes);
 server.use("/orders", orderRoutes);
 server.use("/customers", customerRoutes);
+server.use("/email", emailRoutes);
 server.use("/payment", paymentRoutes);
 
 server.use("/", (req, res) => {
