@@ -18,10 +18,12 @@ server.use(logger('short'));
 const whitelist = [process.env.CLIENT_ORIGIN_URL];
 const corsOptions = {
 	origin: function (origin, cb) {
+		if (!origin) return cb(null, true);
+
 		if (whitelist.indexOf(origin) !== -1) {
-			cb(null, true);
+			return cb(null, true);
 		} else {
-			cb(new Error('Not allowed by CORS'));
+			return cb(new Error('Not allowed by CORS'));
 		}
 	},
 };
